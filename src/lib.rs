@@ -68,7 +68,7 @@ cases.
 */
 
 #![deny(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
+#![cfg_attr(all(not(feature = "std"), not(fuzzing)), no_std)]
 // When testing under miri, we disable tests that take too long. But this
 // provokes lots of dead code warnings. So we just squash them.
 #![cfg_attr(miri, allow(dead_code, unused_macros))]
@@ -1809,7 +1809,7 @@ pub trait ByteOrder:
 /// BigEndian::write_u32(&mut buf, 1_000_000);
 /// assert_eq!(1_000_000, BigEndian::read_u32(&buf));
 /// ```
-#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, arbitrary::Arbitrary)]
 pub enum BigEndian {}
 
 impl Default for BigEndian {
@@ -1839,7 +1839,7 @@ pub type BE = BigEndian;
 /// LittleEndian::write_u32(&mut buf, 1_000_000);
 /// assert_eq!(1_000_000, LittleEndian::read_u32(&buf));
 /// ```
-#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, arbitrary::Arbitrary)]
 pub enum LittleEndian {}
 
 impl Default for LittleEndian {
